@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="/">
+  <meta charset="UTF-8">
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    var serviceWorkerVersion = null;
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
+  <script src="shaka/shaka-player.compiled.js"></script>
+  <script src="shaka/player_interop_bridge.js"></script>
+
+  <style>
+        .shaka-text-container {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 1%;
+        }
+
+        html, body {
+            background-color: BACK_COLOR;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<script>
+        function loadJs(scriptFilename) {
+            var scriptTag = document.createElement('script');
+            scriptTag.defer = true;
+            scriptTag.src = scriptFilename;
+            scriptTag.type = 'application/javascript';
+            document.body.append(scriptTag);
+        }
+
+        window.onload = () => {
+            //animation var logoAnimation = bodymovin.loadAnimation({container: document.getElementById('logo-container'), path: 'assets/packages/horizon_assets/assets/brands/BRAND_NAME/animated_logo.json', renderer: 'svg', loop: false, autoplay: true,});
+            //animation logoAnimation.addEventListener('complete', () => {
+            if (window.tizen) {
+                loadJs('js/tizen_api_wrappers.js');
+            } else {
+                loadJs('js/tizen_api_wrappers.stub.js');
+            }
+            loadJs('main.dart.js');
+            //animation });
+        };
+    </script>
+</body>
+</html>
